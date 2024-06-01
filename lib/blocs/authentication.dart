@@ -133,7 +133,11 @@ class Authentication extends ChangeNotifier{
           accessToken: googleAuth.accessToken,
           idToken: googleAuth.idToken,
         );
-        await _firebaseAuth.signInWithCredential(credential);
+        User userDetails = (await _firebaseAuth.signInWithCredential(credential)).user!;
+        _name = userDetails.displayName;
+        _email = userDetails.email;
+        _uid = userDetails.uid;
+        _signInProvider = 'google';
         _hasGoogleError = false;
         _isLogin = true;
       }catch(e){
@@ -154,8 +158,12 @@ class Authentication extends ChangeNotifier{
       final accessToken = await FacebookAuth.instance.accessToken;
       if(accessToken != null){
         try{
-          final AuthCredential credential = FacebookAuthProvider.credential(accessToken.token);
-          await _firebaseAuth.signInWithCredential(credential);
+          final AuthCredential credential = FacebookAuthProvider.credential(accessToken.tokenString);
+          User userDetails = (await _firebaseAuth.signInWithCredential(credential)).user!;
+          _name = userDetails.displayName;
+          _email = userDetails.email;
+          _uid = userDetails.uid;
+          _signInProvider = 'facebook';
           _hasFbError = false;
           notifyListeners();
         }catch(e){
@@ -214,6 +222,14 @@ class Authentication extends ChangeNotifier{
     final SharedPreferences sp = await SharedPreferences.getInstance();
     _isLogin = sp.getBool('signed_in') ?? false;
     notifyListeners();
+  }
+  Future<bool> checkUserExists()async {
+    DocumentSnapshot snap = await FirebaseFirestore.instance.collection('users').doc(_uid).get();
+    if(snap.exists){
+      return true;
+    }else {
+      return false;
+    }
   }
   Future signOut()async{
     await _firebaseAuth.signOut();

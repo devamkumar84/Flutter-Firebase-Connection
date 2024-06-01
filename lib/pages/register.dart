@@ -125,7 +125,6 @@ class RegisterScreenState extends State<RegisterScreen>{
         au.signInWithEmailPassword(checkEmail.text.toString(), checkPassword.text.toString()).then((_){
           if(au.hasCheckError == false){
             Navigator.pop(context);
-            print('hello uid: ${au.uid}');
             au.getUserDataFromFireStore(au.uid)
             .then((value)=> au.saveDataToSp()
             .then((value)=> au.setSignIn()
@@ -204,11 +203,54 @@ class RegisterScreenState extends State<RegisterScreen>{
               ),
             );
           }else {
-            au.getTimeStamp()
-                .then((value) => au.setSignIn()
-                .then((value){
-              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> const HomeScreen()));
-            }));
+            au.checkUserExists().then((value){
+              if(value == true){
+                au.getUserDataFromFireStore(au.uid)
+                    .then((value)=> au.saveDataToSp()
+                    .then((value)=> au.setSignIn()
+                    .then((value){
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> const HomeScreen()));
+                })
+                ));
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Container(
+                      height: 60,
+                      alignment: Alignment.centerLeft,
+                      child: const Text('Login Successfully'),
+                    ),
+                    action: SnackBarAction(
+                      onPressed: (){},
+                      textColor: Colors.blueAccent,
+                      label: 'OK',
+                    ),
+                  ),
+                );
+              }else {
+                au.getTimeStamp()
+                    .then((value)=> au.saveToFireStore()
+                    .then((value)=> au.saveDataToSp()
+                    .then((value)=> au.setSignIn()
+                    .then((value){
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> const HomeScreen()));
+                })
+                )));
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Container(
+                      height: 60,
+                      alignment: Alignment.centerLeft,
+                      child: const Text('Login Successfully with Store Data'),
+                    ),
+                    action: SnackBarAction(
+                      onPressed: (){},
+                      textColor: Colors.blueAccent,
+                      label: 'OK',
+                    ),
+                  ),
+                );
+              }
+            });
           }
         });
       }
@@ -250,11 +292,54 @@ class RegisterScreenState extends State<RegisterScreen>{
               ),
             );
           }else {
-            au.getTimeStamp()
-                .then((value) => au.setSignIn()
-                .then((value){
-              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> const HomeScreen()));
-            }));
+            au.checkUserExists().then((value){
+              if(value == true){
+                au.getUserDataFromFireStore(au.uid)
+                    .then((value)=> au.saveDataToSp()
+                    .then((value)=> au.setSignIn()
+                    .then((value){
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> const HomeScreen()));
+                })
+                ));
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Container(
+                      height: 60,
+                      alignment: Alignment.centerLeft,
+                      child: const Text('Login Successfully'),
+                    ),
+                    action: SnackBarAction(
+                      onPressed: (){},
+                      textColor: Colors.blueAccent,
+                      label: 'OK',
+                    ),
+                  ),
+                );
+              }else {
+                au.getTimeStamp()
+                    .then((value)=>au.saveToFireStore()
+                    .then((value)=> au.saveDataToSp()
+                    .then((value)=> au.setSignIn()
+                    .then((value){
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> const HomeScreen()));
+                })
+              )));
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Container(
+                      height: 60,
+                      alignment: Alignment.centerLeft,
+                      child: const Text('Login Successfully With Store Data'),
+                    ),
+                    action: SnackBarAction(
+                      onPressed: (){},
+                      textColor: Colors.blueAccent,
+                      label: 'OK',
+                    ),
+                  ),
+                );
+              }
+            });
           }
         });
       }
