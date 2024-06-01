@@ -1,5 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:may_two/blocs/home.dart';
 import 'package:may_two/pages/register.dart';
 import 'package:provider/provider.dart';
 
@@ -15,7 +17,14 @@ class HomeScreen extends StatefulWidget{
 class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    context.read<Home>().getHomeData();
+  }
+  @override
   Widget build(BuildContext context){
+    final homeArt = context.watch<Home>();
     return DefaultTabController(
       length: 5,
       child: Scaffold(
@@ -89,120 +98,94 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         body: TabBarView(
           children: [
-            SingleChildScrollView(
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                color: Colors.white,
-                child: Column(
-                    children: [
-                      Stack(
-                        children: [
-                          Container(
-                            height: 250,
-                            width: MediaQuery.of(context).size.width,
-                            decoration: const BoxDecoration(
-                                image: DecorationImage(
-                                  fit: BoxFit.cover,
-                                  alignment: Alignment.center,
-                                  image: AssetImage('assets/images/climate_change_challenge1.webp'),
-                                )
-                            ),
-                          ),
-                          Container(
-                            width: MediaQuery.of(context).size.width,
-                            height: 250,
-                            color: Colors.black.withOpacity(.4),
-                          ),
-                          const Positioned(
-                            bottom: 10,
-                            left: 10,
-                            right: 10,
-                            child: Text('Sri Lanka crisis: Pro-government supporters attack protesters in',
-                              style: TextStyle(fontSize: 26,color: Colors.white,fontWeight: FontWeight.w400),),
-                          )
-                        ],
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: ListView(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
+            RefreshIndicator(
+              onRefresh: ()async{
+                context.read<Home>().onRefresh();
+              },
+              child: SingleChildScrollView(
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  color: Colors.white,
+                  child: Column(
+                      children: [
+                        Stack(
                           children: [
-                            Column(
-                              children: [
-                                ClipRRect(
-                                    borderRadius: const BorderRadius.only(topLeft: Radius.circular(10),topRight: Radius.circular(10)),
-                                    child: Image(image: const AssetImage('assets/images/protest1.webp'),height: 160,fit: BoxFit.cover,width: MediaQuery.of(context).size.width,)
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(10),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      const Text('Sri Lanka crisis: Pro-government supporters attack protesters in',style: TextStyle(fontSize: 23,color: Colors.black,fontWeight: FontWeight.w400),),
-                                      const Text('The most secure and recommended approach is to reach out to the administrator responsible for the server. They can verify your identity and provide the correct credentials or guide you on the appropriate access procedure.',
-                                          overflow: TextOverflow.ellipsis,
-                                          maxLines: 2,
-                                          style: TextStyle(fontSize: 18,fontWeight: FontWeight.w400)
-                                      ),
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          IconButton(
-                                            onPressed: (){},
-                                            icon: const FaIcon(FontAwesomeIcons.shareFromSquare),
-                                          ),
-                                          IconButton(
-                                            onPressed: (){},
-                                            icon: const FaIcon(FontAwesomeIcons.bookmark),
-                                          )
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                )
-                              ],
+                            Container(
+                              height: 250,
+                              width: MediaQuery.of(context).size.width,
+                              decoration: const BoxDecoration(
+                                  image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    alignment: Alignment.center,
+                                    image: AssetImage('assets/images/climate_change_challenge1.webp'),
+                                  )
+                              ),
                             ),
-                            const Divider(thickness: 1,color: Colors.grey,height: 30,),
-                            Column(
-                              children: [
-                                ClipRRect(
-                                    borderRadius: const BorderRadius.only(topLeft: Radius.circular(10),topRight: Radius.circular(10)),
-                                    child: Image(image: const AssetImage('assets/images/error_img.webp'),height: 160,fit: BoxFit.cover,width: MediaQuery.of(context).size.width)
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(10),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      const Text('Sri Lanka crisis: Pro-government supporters attack protesters in',style: TextStyle(fontSize: 23,color: Colors.black,fontWeight: FontWeight.w400),),
-                                      const Text('The most secure and recommended approach is to reach out to the administrator responsible for the server. They can verify your identity and provide the correct credentials or guide you on the appropriate access procedure.',
-                                          overflow: TextOverflow.ellipsis,
-                                          maxLines: 2,
-                                          style: TextStyle(fontSize: 18,fontWeight: FontWeight.w400)
-                                      ),
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          IconButton(
-                                            onPressed: (){},
-                                            icon: const FaIcon(FontAwesomeIcons.shareFromSquare),
-                                          ),
-                                          IconButton(
-                                            onPressed: (){},
-                                            icon: const FaIcon(FontAwesomeIcons.bookmark),
-                                          )
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                )
-                              ],
+                            Container(
+                              width: MediaQuery.of(context).size.width,
+                              height: 250,
+                              color: Colors.black.withOpacity(.4),
                             ),
+                            const Positioned(
+                              bottom: 10,
+                              left: 10,
+                              right: 10,
+                              child: Text('Sri Lanka crisis: Pro-government supporters attack protesters in',
+                                style: TextStyle(fontSize: 26,color: Colors.white,fontWeight: FontWeight.w400),),
+                            )
                           ],
                         ),
-                      )
-                    ]
+                        Padding(
+                          padding: EdgeInsets.all(12.0),
+                          child: ListView.separated(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemBuilder: (context, index){
+                                return homeArt.data.isEmpty ? Center(child: CircularProgressIndicator(),):
+                                Column(
+                                  children: [
+                                    ClipRRect(
+                                        borderRadius: const BorderRadius.only(topLeft: Radius.circular(10),topRight: Radius.circular(10)),
+                                        child: CachedNetworkImage(imageUrl: homeArt.data[index].image,height: 160,fit: BoxFit.cover,width: MediaQuery.of(context).size.width,),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(10),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(homeArt.data[index].title,style: TextStyle(fontSize: 23,color: Colors.black,fontWeight: FontWeight.w400),),
+                                          Text(homeArt.data[index].desc,
+                                              overflow: TextOverflow.ellipsis,
+                                              maxLines: 2,
+                                              style: TextStyle(fontSize: 18,fontWeight: FontWeight.w400)
+                                          ),
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              IconButton(
+                                                onPressed: (){},
+                                                icon: const FaIcon(FontAwesomeIcons.shareFromSquare),
+                                              ),
+                                              IconButton(
+                                                onPressed: (){},
+                                                icon: const FaIcon(FontAwesomeIcons.bookmark),
+                                              )
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                );
+                              },
+                              separatorBuilder: (context, index){
+                                return const Divider(thickness: 1,color: Colors.grey,height: 30,);
+                              },
+                              itemCount: homeArt.data.isEmpty ? 1 : homeArt.data.length,
+                          ),
+                        ),
+                      ]
+                  ),
                 ),
               ),
             ),
