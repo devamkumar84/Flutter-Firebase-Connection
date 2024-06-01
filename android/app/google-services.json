@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "712155448709",
+    "project_id": "may-two",
+    "storage_bucket": "may-two.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:712155448709:android:e2fee50cfab5d297a4f0ec",
+        "android_client_info": {
+          "package_name": "com.may_two.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "712155448709-fcbv7apvbl6ufdu3u8jolhu32ur4tj7h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.may_two.app",
+            "certificate_hash": "40919ad302d01776a17c7da5972deeb5ea06d48c"
+          }
+        },
+        {
+          "client_id": "712155448709-56381ftc0i0rqrm8o10b38avj86fi5nl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBt_W3QS6euSCauDKGfOu8vgNtdpmSDMvs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "712155448709-56381ftc0i0rqrm8o10b38avj86fi5nl.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "712155448709-00slcrggmi56jc4ole1159g6v39d0pf1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.mayTwo"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
